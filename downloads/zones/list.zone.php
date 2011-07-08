@@ -23,8 +23,8 @@ class listZone extends jZone {
         $dir = $this->getParam('dir', false);
         if (!$dir) return;
 
-        jClasses::inc('download_config');
-        $config = downloadConfig::getConfig();
+        //get the config of the module from the profiles.ini.php config file
+        $config = jProfiles::get('downloads');
         $limit = $config['number.downloads.on.home'];
 
         if ($limit <= 0 ) $limit = 10;

@@ -16,18 +16,16 @@ class viewZone extends jZone {
 
         $dir = $this->getParam('dir', false);
         if (!$dir) return;
-
-        jClasses::inc('download_config');
-        $config = downloadConfig::getConfig();
-        $allowGuest = $config['allow.guest'];
+        //get the config of the module from the profiles.ini.php config file
+        $config = jProfiles::get('downloads');
 
         $filesize = $this->getParam('filesize', false);
-
-        $data = $this->getParam('data', false);
+        $data     = $this->getParam('data', false);
+        
         $this->_tpl->assign('path',$dir);
         $this->_tpl->assign('filesize',$filesize);
         $this->_tpl->assign('download',$data);
-        $this->_tpl->assign('allowGuest',$allowGuest);
+        $this->_tpl->assign('allowGuest',$config['allow.guest']);
     }
 
 }

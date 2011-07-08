@@ -2,12 +2,14 @@
 /**
 * @package   downloads
 * @subpackage downloads
-* @author    FoxMaSk
-* @copyright  2008 FoxMaSk
+* @author    Olivier Demah
+* @copyright  2008-2011 FoxMaSk
 * @link      http://www.foxmask.info
 * @licence  http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
 */
-
+/**
+ * This class is a datasource which return the file of a given directory
+ */
 class downloads_files_fs implements jIFormsDatasource
 {
     protected $formId = 0;
@@ -17,16 +19,17 @@ class downloads_files_fs implements jIFormsDatasource
     function __construct($id)
     {
         $this->formId = $id;
-        jClasses::inc('downloads~download_config');
-        $config = downloadConfig::getConfig();
+        //get the config of the module from the profiles.ini.php config file
+        $config = jProfiles::get('downloads');
+jLog::dump($config);        
         //get the file from the FS that are not yet in the database
         $dao = jDao::get('downloads~downloads');
-        $dh = opendir(realpath($config['commons.hosting.path']).DIRECTORY_SEPARATOR.$config['commons.upload.dir']);
-        while (($file = readdir($dh)) !== false) {
-            if (! preg_match('/^\.(.*)/',$file) ) {
-                if ( $dao->getFile($file) === false )
-                    $this->data[$file] = $file;
-            }
+        $downloadsDirectory = $config['commons.hosting.path'].DIRECTORY_SEPARATOR.$config['commons.upload.dir'];
+        //$dh = opendir(realpath($config['commons.hosting.path']).DIRECTORY_SEPARATOR.$config['commons.upload.dir']);
+        $dir = new DirectoryIterator($downloadsDirectory);
+        foreach ($dir as $fileinfo) {
+            if (! $fileinfo->isDot())
+                $this->data[$fileinfo->getFilename()] = $fileinfo->getFilename();
         }
     }
 

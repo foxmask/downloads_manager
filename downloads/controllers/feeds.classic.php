@@ -2,35 +2,39 @@
 /**
 * @package   downloads
 * @subpackage downloads
-* @author    FoxMaSk
-* @copyright  2008 FoxMaSk
+* @author    Olivier Demah
+* @copyright  2008-2011 FoxMaSk
 * @link      http://www.foxmask.info
 * @licence  http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
 */
 
 class feedsCtrl extends jController {
-    /**
-    *
-    */
     private $dlDao = 'downloads~downloads';
-
+    /**
+    * display the lastest existing downloads
+    */
     function lastest() {
         $from = (string) $this->param('dir');
         if (!$from) return;
 
         return $this->rss('lastest',$from);
     }
-
+    /**
+    * display the most popular existing downloads
+    */
     function mostpopular() {
         $from = (string) $this->param('dir');
         if (!$from) return;
 
         return $this->rss('popular',$from);
     }
-
+    /**
+    * build the RSS !
+    */
     private function rss($what,$from) {
 
         if ($what != 'popular' and $what != 'lastest') exit;
+
 
         jClasses::inc('download_config');
         $config = downloadConfig::getConfig();

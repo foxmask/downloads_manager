@@ -2,8 +2,8 @@
 /**
 * @package   downloads
 * @subpackage admin-downloads
-* @author    FoxMaSk
-* @copyright  2008 FoxMaSk
+* @author    Olivier Demah
+* @copyright  2008-2011 FoxMaSk
 * @link      http://www.foxmask.info
 * @licence  http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
 */
@@ -40,8 +40,7 @@ class downloadsadminListener extends jEventListener{
 
     function onDownloadGetHostingDirectory ($event) {
 
-        jClasses::inc('downloads~download_config');
-        $dlConfig = downloadConfig::getConfig();
+        $dlConfig = jProfiles::get('downloads');
 
         $event->Add(
                     array('hostingFolder'=>$dlConfig['commons.upload.dir'],

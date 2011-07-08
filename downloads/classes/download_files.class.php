@@ -2,8 +2,8 @@
 /**
 * @package   downloads
 * @subpackage downloads
-* @author    FoxMaSk
-* @copyright  2008 FoxMaSk
+* @author    Olivier Demah
+* @copyright  2008-2011 FoxMaSk
 * @link      http://www.foxmask.info
 * @licence  http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
 */
@@ -24,8 +24,8 @@ class downloadFiles {
             $file = $userDir[0]['hostingPath'] .DIRECTORY_SEPARATOR. $path. DIRECTORY_SEPARATOR.$filename ;
         }
         else {
-            jClasses::inc('downloads~download_config');
-            $config = downloadConfig::getConfig();
+            //get the config of the module from the profiles.ini.php config file
+            $config = jProfiles::get('downloads');
 
             $file = realpath($config['commons.hosting.path']).DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$filename;
         }

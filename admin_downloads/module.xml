@@ -11,10 +11,9 @@
         <label lang="en_EN">Downloads Manager</label>
         <description lang="en_EN">This module permits to manage the files to download.</description>
         <license URL="http://www.gnu.org/licenses/gpl.html">GNU Lesser General Public Licence, see LICENCE file</license>
-        <copyright>2008 foxmask</copyright>
+        <copyright>2008-2011 foxmask</copyright>
         <creator name="foxmask" email="foxmask@foxmask.info" active="true" />
         <homepageURL>http://foxmask.info</homepageURL>
-        <!-- updateURL></updateURL -->
    </info>
    <notes><![CDATA[
    voir le fichier downloads/install/INSTALL-1.6.0.html pour installer le module<br/>
@@ -22,6 +21,6 @@
     ]]>
    </notes>
     <dependencies>
-        <jelix minversion="1.1.5" maxversion="1.2.*"/>
+        <jelix minversion="1.1.5" maxversion="1.3.*"/>
     </dependencies>
 </module>

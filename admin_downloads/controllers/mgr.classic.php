@@ -2,8 +2,8 @@
 /**
 * @package   downloads
 * @subpackage admin-downloads
-* @author    FoxMaSk
-* @copyright  2008 FoxMaSk
+* @author    Olivier Demah
+* @copyright  2008-2011 FoxMaSk
 * @link      http://www.foxmask.info
 * @licence  http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
 */
@@ -55,18 +55,17 @@ class mgrCtrl extends jController {
     //Admin Config
     function config() {
         // load the config
-        jClasses::inc('downloads~download_config');
-        $config = downloadConfig::editConfig();
         // we submit config
         if ($this->param('_submit') == 'Ok') {
-
+            $file = jApp::configPath('profiles.ini.php');
+            $config = new jIniFileModifier($file);
             $form = jForms::fill($this->configForm);
             // change the value
-            $config->setValue('allow.guest',$this->param('guest'));
-            $config->setValue('allow.external.links',$this->param('external_links'));
-            $config->setValue('number.downloads.on.home',$this->param('number_downloads_on_home'));
-            $config->setValue('last.downloads.on.home',$this->param('last_downloads_on_home'));
-            $config->setValue('most.popular.downloads.on.home',$this->param('most_popular_downloads_on_home'));
+            $config->setValue('allow.guest',$this->param('guest'),'downloads:myapp');
+            $config->setValue('allow.external.links',$this->param('external_links'),'downloads:myapp');
+            $config->setValue('number.downloads.on.home',$this->param('number_downloads_on_home'),'downloads:myapp');
+            $config->setValue('last.downloads.on.home',$this->param('last_downloads_on_home'),'downloads:myapp');
+            $config->setValue('most.popular.downloads.on.home',$this->param('most_popular_downloads_on_home'),'downloads:myapp');
             // save config file
             $config->save();
             // message for the user
@@ -78,16 +77,16 @@ class mgrCtrl extends jController {
         }
         // display the config page
         else {
-
+            $config = jProfiles::get('downloads');
             $form = jForms::get($this->configForm);
             if($form == null)
                 $form = jForms::create($this->configForm);
 
-            $form->setData('guest',$config->getValue('allow.guest'));
-            $form->setData('external_links',$config->getValue('allow.external.links'));
-            $form->setData('number_downloads_on_home',$config->getValue('number.downloads.on.home'));
-            $form->setData('last_downloads_on_home',$config->getValue('last.downloads.on.home'));
-            $form->setData('most_popular_downloads_on_home',$config->getValue('most.popular.downloads.on.home'));
+            $form->setData('guest',$config['allow.guest']);
+            $form->setData('external_links',$config['allow.external.links']);
+            $form->setData('number_downloads_on_home',$config['number.downloads.on.home']);
+            $form->setData('last_downloads_on_home',$config['last.downloads.on.home']);
+            $form->setData('most_popular_downloads_on_home',$config['most.popular.downloads.on.home']);
         }
 
         $rep = $this->getResponse('html');
@@ -106,7 +105,8 @@ class mgrCtrl extends jController {
 
         //jClasses::inc('downloads~download_config');
         //$config = downloadConfig::getConfig();
-        jClasses::inc('downloads~download_files');
+    
+        //jClasses::inc('downloads~download_files');
 
         $id = (integer) $this->param('id');
 
@@ -391,8 +391,7 @@ class mgrCtrl extends jController {
 
         $dao->trash($id);
 
-        jClasses::inc('downloads~download_config');
-        $config = downloadConfig::getConfig();
+        $config = jProfiles::get('downloads');
         //get the file from the FS that are not yet in the database
         $datas=array();
         $dh = opendir(realpath($config['commons.hosting.path']).DIRECTORY_SEPARATOR.$config['commons.upload.dir']);

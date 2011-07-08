@@ -2,8 +2,8 @@
 /**
 * @package   downloads
 * @subpackage downloads
-* @author    FoxMaSk
-* @copyright  2008 FoxMaSk
+* @author    Olivier Demah
+* @copyright  2008-2011 FoxMaSk
 * @link      http://www.foxmask.info
 * @licence  http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
 */
@@ -11,10 +11,8 @@
 
 class defaultCtrl extends jController {
     /**
-    *
-    */
-
-    // Public : list all the enabled Downloads for a given " path " !
+     * list all the enabled Downloads for a given " path " !
+     */
     function index() {
 
         $dir = (string) $this->param('dir');
@@ -45,7 +43,9 @@ class defaultCtrl extends jController {
         return $rep;
     }
 
-    // Public : view the selected Download (by its url) for a given " path " !
+    /**
+     * view the selected Download (by its url) for a given " path " !
+     */
     function view() {
         $url = (string) $this->param('url');
         $dir = (string) $this->param('dir');
@@ -83,12 +83,13 @@ class defaultCtrl extends jController {
         return $rep;
     }
 
-    // Public : let's dl the file
+    /**
+     * let's dl the file
+     */
     function dl() {
 
-        // load the config file
-        jClasses::inc('downloads~download_config');
-        $config = downloadConfig::getConfig();
+        //get the config of the module from the profiles.ini.php config file
+        $config = jProfiles::get('downloads');
         // get the Antileech stuff
         jClasses::inc('downloads~download_files');
         //config says :
