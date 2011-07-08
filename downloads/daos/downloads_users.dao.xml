@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dao xmlns="http://jelix.org/ns/dao/1.0">
     <datasources>
-        <primarytable name="downloads_users" realname="downloads_users"  primarykey="login,path" />
+        <primarytable name="downloads_users" realname="dl_downloads_users"  primarykey="login,path" />
     </datasources>
     <record>
     <property name="login" fieldname="login" datatype="string" required="true" maxlength="50"/>

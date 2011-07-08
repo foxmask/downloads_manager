@@ -1,51 +1,51 @@
 <?php
 /**
-* @package      downloads
-* @subpackage
-* @author       foxmask
-* @contributor foxmask
-* @copyright    2008 foxmask
-* @link
-* @licence  http://www.gnu.org/licenses/gpl.html GNU General Public Licence, see LICENCE file
+* @package   downloads
+* @subpackage downloads
+* @author    FoxMaSk
+* @copyright  2008 FoxMaSk
+* @link      http://www.foxmask.info
+* @licence  http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
 */
+
 class downloadFiles {
     /*
      * getFileSize
      *
      * display the filesize on the preview page
      */
-	public static function getFileSize($filename,$path) {
+    public static function getFileSize($filename,$path) {
 
-		$ev = jEvent::notify('DownloadGetHostingDirectory');
-		$userDir = $ev->getResponse();
+        $ev = jEvent::notify('DownloadGetHostingDirectory');
+        $userDir = $ev->getResponse();
 
-		if ( $userDir[0]['hostingPath'] != '' ) {
+        if ( $userDir[0]['hostingPath'] != '' ) {
 
-		    $file = $userDir[0]['hostingPath'] .DIRECTORY_SEPARATOR. $path. DIRECTORY_SEPARATOR.$filename ;
-		}
-		else {
-		    jClasses::inc('download_config');
-		    $config = downloadConfig::getConfig();
+            $file = $userDir[0]['hostingPath'] .DIRECTORY_SEPARATOR. $path. DIRECTORY_SEPARATOR.$filename ;
+        }
+        else {
+            jClasses::inc('downloads~download_config');
+            $config = downloadConfig::getConfig();
 
-		    $file = realpath($config->getValue('commons.hosting.path')).DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$filename;
-		}
+            $file = realpath($config['commons.hosting.path']).DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$filename;
+        }
 
-		$filesize = '';
+        $filesize = '';
 
-		if (! file_exists($file)) return $filesize;
+        if (! file_exists($file)) return $filesize;
 
         //on ne calcul pas la taille de fichiers "distants"
 
         // calculate the size of the file to download and display it
-		$size = @filesize($file);
-		$i=0;
-		$iec = array("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB");
-		while (($size/1024)>1)
-		{
-			$size=$size/1024;
-			$i++;
-		}
-		$filesize = substr($size,0,strpos($size,'.')+4).$iec[$i];
+        $size = @filesize($file);
+        $i=0;
+        $iec = array("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB");
+        while (($size/1024)>1)
+        {
+            $size=$size/1024;
+            $i++;
+        }
+        $filesize = substr($size,0,strpos($size,'.')+4).$iec[$i];
 
         return $filesize;
     }

@@ -1,21 +1,18 @@
 <?php
 /**
-* @package      downloads
-* @subpackage
-* @author       foxmask
-* @contributor foxmask
-* @copyright    2008 foxmask
-* @link
-* @licence  http://www.gnu.org/licenses/gpl.html GNU General Public Licence, see LICENCE file
+* @package   downloads
+* @subpackage downloads
+* @author    FoxMaSk
+* @copyright  2008 FoxMaSk
+* @link      http://www.foxmask.info
+* @licence  http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
 */
+
 
 class defaultCtrl extends jController {
     /**
     *
     */
-    public $pluginParams = array(
-        '*'=>array('auth.required'=>false),
-     );
 
     // Public : list all the enabled Downloads for a given " path " !
     function index() {
@@ -68,7 +65,7 @@ class defaultCtrl extends jController {
             $rep->action='jelix~error:notfound';
             return $rep;
         }
-        jClasses::inc('download_files');
+        jClasses::inc('downloads~download_files');
         $filesize = downloadFiles::getFileSize($theDownload->dl_filename,$theDownload->dl_path);
 
         if ($filesize == '' ) {
@@ -90,14 +87,14 @@ class defaultCtrl extends jController {
     function dl() {
 
         // load the config file
-        jClasses::inc('download_config');
+        jClasses::inc('downloads~download_config');
         $config = downloadConfig::getConfig();
         // get the Antileech stuff
-        jClasses::inc('download_files');
+        jClasses::inc('downloads~download_files');
         //config says :
         if (
             // ... we dont allow leecher !
-            $config->getValue('allow.external.links') == 0 and
+            $config['allow.external.links'] == 0 and
             // ... and we found one !
 
             downloadFiles::antileech() == true) {
@@ -111,12 +108,12 @@ class defaultCtrl extends jController {
         $dao = jDao::get('downloads~downloads');
         $theDownload = $dao->get($id);
 
-		$ev = jEvent::notify('DownloadGetHostingDirectory');
-		$userDir = $ev->getResponse();
+        $ev = jEvent::notify('DownloadGetHostingDirectory');
+        $userDir = $ev->getResponse();
 
-		if ( $userDir[0]['hostingFolder'] != '' and $userDir[0]['hostingPath'] != '' )
-			$file = $userDir[0]['hostingPath'] .DIRECTORY_SEPARATOR. $theDownload->dl_path.DIRECTORY_SEPARATOR.$theDownload->dl_filename ;
-		else
+        if ( $userDir[0]['hostingFolder'] != '' and $userDir[0]['hostingPath'] != '' )
+            $file = $userDir[0]['hostingPath'] .DIRECTORY_SEPARATOR. $theDownload->dl_path.DIRECTORY_SEPARATOR.$theDownload->dl_filename ;
+        else
             $file = $config->getValue('commons.upload.dir').DIRECTORY_SEPARATOR.$theDownload->dl_path.DIRECTORY_SEPARATOR.$theDownload->dl_filename;
 
 

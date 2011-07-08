@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form xmlns="http://jelix.org/ns/forms/1.1">
+    <hidden ref="id" />
+    <hidden ref="login" />
+    <hidden ref="dl_path" />
+
+    <input ref="dl_name" type="string" required="true">
+        <label locale="admin_downloads~admin.dl_name"/>
+    </input>
+
+    <input ref="dl_url" type="string">
+        <label locale="admin_downloads~admin.dl_url"/>
+    </input>
+
+    <choice ref="file_type" required="true">
+        <label locale="admin_downloads~admin.choose.a.file"/>
+        <item value="file_upload">
+            <label locale="admin_downloads~admin.from.your.computer"/>
+            <upload ref="dl_filename" maxsize="50000000">
+                <label>:</label>
+            </upload>
+        </item>
+        <item value="file_ftp">
+            <label locale="admin_downloads~admin.from.the.ftp.server"/>
+            <menulist ref="file_from_fs">
+                <emptyitem locale="admin_downloads~admin.choose.a.file"/>
+               <label>:</label>
+               <datasource class="downloads~downloads_files_fs" />
+            </menulist>
+        </item>
+    </choice>
+
+
+    <menulist ref="project">
+       <label locale="admin_downloads~admin.project"/>
+       <emptyitem locale="admin_downloads~admin.project"/>
+       <datasource dao="downloads~downloads_users" method="findByLogin" criteriafrom="login"
+            labelproperty="project" valueproperty="project"/>
+    </menulist>
+
+    <radiobuttons ref="dl_enable" required="true">
+       <label locale="admin_downloads~admin.dl_enable"/>
+       <item value="1" locale="admin_downloads~admin.enable"/>
+       <item value="0" locale="admin_downloads~admin.disable" selected="true"/>
+    </radiobuttons>
+
+    <textarea ref="dl_desc" required="true">
+        <label locale="admin_downloads~admin.dl_desc"/>
+    </textarea>
+
+    <date ref="dl_date" required="true" >
+        <label locale="admin_downloads~admin.dl_date"/>
+    </date>
+
+    <input ref="dl_count" type="integer" required="true" defaultvalue="0">
+        <label locale="admin_downloads~admin.dl_count" />
+    </input>
+
+    <submit ref="validate">
+        <label>Veuillez valider</label>
+        <item value="preview" locale="admin_downloads~admin.previewBt"/>
+        <item value="save" locale="admin_downloads~admin.saveBt"/>
+    </submit>
+</form>

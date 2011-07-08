@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suburls xmlns="http://jelix.org/ns/suburls/1.0">
+
+    <url pathinfo="/:dir" module="downloads" action="default:index">
+        <param name="dir" type="string" />
+    </url>
+    <url pathinfo="/" module="downloads" action="default:index"/>
+    <url pathinfo="/dl/:id" module="downloads" action="default:dl">
+        <param name="id" type="integer" />
+    </url>
+    <url pathinfo="/:dir/:url" module="downloads" action="default:view">
+        <param name="dir" type="string" />
+        <param name="url" type="string" />
+    </url>
+    <url pathinfo="/feeds/lastest/:dir" module="downloads" action="feeds:lastest">
+        <param name="dir" type="string" />
+    </url>
+    <url pathinfo="/feeds/mostpopular/:dir" module="downloads" action="feeds:mostpopular">
+        <param name="dir" type="string" />
+    </url>
+</suburls>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suburls xmlns="http://jelix.org/ns/suburls/1.0">
+    <url pathinfo="/manage" module="admin_downloads" action="mgr:manage"/>
+    <url pathinfo="/manage/:id" module="admin_downloads" action="mgr:manage">
+        <param name="id" type="integer" />
+    </url>
+    <url pathinfo="/dls" module="admin_downloads" action="mgr:dls"/>
+    <url pathinfo="/config" module="admin_downloads" action="mgr:config"/>
+
+    <url pathinfo="/delete/:id" module="admin_downloads" action="mgr:delete">
+        <param name="id" type="integer" />
+    </url>
+    <url pathinfo="/onblock/:id" module="admin_downloads" action="mgr:dl_on_block">
+        <param name="id" type="integer" />
+    </url>
+    <url pathinfo="/notonblock/:id" module="admin_downloads" action="mgr:dl_not_on_block">
+        <param name="id" type="integer" />
+    </url>
+    <url pathinfo="/enable/:id" module="admin_downloads" action="mgr:dl_enable">
+        <param name="id" type="integer" />
+    </url>
+    <url pathinfo="/disable/:id" module="admin_downloads" action="mgr:dl_disable">
+        <param name="id" type="integer" />
+    </url>
+    <url pathinfo="/about" module="admin_downloads" action="mgr:index"/>
+
+    <url pathinfo="/trashx/:id" module="admin_downloads" action="mgr:trashx">
+        <param name="id" type="integer" />
+    </url>
+
+</suburls>
