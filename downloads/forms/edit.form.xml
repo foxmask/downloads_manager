@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form xmlns="http://jelix.org/ns/forms/1.1">
+    <hidden ref="id" />
+    <hidden ref="login" />
+    <hidden ref="dl_path" />
+
+    <input ref="dl_name" type="string" required="true">
+        <label locale="downloads~common.dl_name"/>
+    </input>
+
+    <input ref="dl_url" type="string">
+        <label locale="downloads~common.dl_url"/>
+    </input>
+    
+    <choice ref="file_type" required="true">
+        <label locale="downloads~common.choose.a.file"/>
+        <item value="file_upload">
+            <label locale="downloads~common.from.your.computer"/>
+            <upload ref="dl_filename" maxsize="50000000">
+                <label>:</label>
+            </upload>
+        </item>
+        <item value="file_ftp">
+            <label locale="downloads~common.from.the.ftp.server"/>
+            <menulist ref="file_from_fs">
+               <label>:</label>
+               <datasource class="downloads~downloads_files_fs" />
+            </menulist>
+        </item>
+    </choice>
+
+
+    <menulist ref="project">
+       <label locale="downloads~common.project"/>
+       <datasource dao="downloads~downloads_users" method="findByLogin" criteriafrom="login"
+            labelproperty="project" valueproperty="project"/>
+    </menulist>
+
+    <radiobuttons ref="dl_enable" required="true">
+       <label locale="downloads~common.dl_enable"/>
+       <item value="1" locale="downloads~common.enable"/>
+       <item value="0" locale="downloads~common.disable" selected="true"/>
+    </radiobuttons>
+
+    <textarea ref="dl_desc" required="true">
+        <label locale="downloads~common.dl_desc"/>
+    </textarea>
+
+    <date ref="dl_date" required="true" >
+        <label locale="downloads~common.dl_date"/>
+    </date>
+
+    <input ref="dl_count" type="integer" required="true" defaultvalue="0">
+        <label locale="downloads~common.dl_count" />
+    </input>
+
+    <submit ref="validate">
+        <label>Veuillez valider</label>
+        <item value="preview" locale="downloads~common.previewBt"/>
+        <item value="save" locale="downloads~common.saveBt"/>
+    </submit>
+</form>
