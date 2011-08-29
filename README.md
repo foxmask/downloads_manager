@@ -10,4 +10,5 @@ Installation
 get the source and copy them in your own jelix module repository then, on the command line, enter 
 
 > php cmd.php installmodule downloads
+
 > php cmd.php installmodule admin_downloads
